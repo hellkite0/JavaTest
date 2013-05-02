@@ -18,4 +18,34 @@ public class XMLParser {
 	{
 		
 	}
+	
+	public void Load(String sFileName)
+	{
+		try
+		{
+			File cFile = new File(sFileName);
+			DocumentBuilderFactory cFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder cBuilder = cFactory.newDocumentBuilder();
+			
+			cDoc_ = cBuilder.parse(cFile);
+			
+			cDoc_.getDocumentElement().normalize();
+			
+			System.out.println("Root Element : " + cDoc_.getDocumentElement().getNodeName());
+		}
+		catch(ParserConfigurationException e)
+		{
+			e.printStackTrace();
+		}
+		catch(SAXException e)
+		{
+			e.printStackTrace();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	private Document cDoc_;
 }
