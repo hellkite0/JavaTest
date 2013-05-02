@@ -1,6 +1,6 @@
 package mainpackage;
 
-import java.io.ObjectInputStream.GetField;
+import org.w3c.dom.Node;
 
 import mainpackage.Test;
 import mainpackage.ThreadTest;
@@ -20,5 +20,8 @@ public class Main {
 		
 		XMLParser cXml = new XMLParser();
 		cXml.Load(sPathName + "00001.xml");
+		
+		Node cNode = cXml.GetNode("id");
+		System.out.println(cNode.getNodeValue());
 	}
 }

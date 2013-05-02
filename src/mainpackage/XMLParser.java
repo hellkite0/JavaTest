@@ -47,5 +47,13 @@ public class XMLParser {
 		}
 	}
 	
+	public Node GetNode(String sNodeName)
+	{
+		NodeList cNodeList = cDoc_.getElementsByTagName(sNodeName);
+		Node cNode = cNodeList.item(0);
+		
+		return cNode;
+	}
+	
 	private Document cDoc_;
 }
