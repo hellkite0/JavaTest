@@ -1,8 +1,16 @@
 package mainpackage;
 
-public class Test {
-	public Test()
+public class Test<T> {
+	public Test(T xValue)
 	{
-		System.out.println("Test Class");
+		xValue_ = xValue;
 	}
+		
+	public T Get()
+	{
+		System.out.println(xValue_.getClass().getName());
+		return xValue_;
+	}
+	
+	private T xValue_;
 }

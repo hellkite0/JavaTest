@@ -14,7 +14,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import java.util.StringTokenizer;
+
 import XMLParser.XMLNodeList;
+import XMLParser.DataParser;
 
 public class XMLNode {
 	public XMLNode() {}
@@ -34,7 +37,6 @@ public class XMLNode {
 	
 	public String GetAttribute(String sAttrName)
 	{
-		Attr cAttr = cElement_.getAttributeNode(sAttrName);
 		return cElement_.getAttribute(sAttrName);		
 	}
 	
@@ -53,6 +55,31 @@ public class XMLNode {
 	{
 		String sValue = cElement_.getFirstChild().getNodeValue();
 		return Float.parseFloat(sValue);
+	}
+	
+	public void GetValues(int[] iValues)
+	{
+		String[] sStrArray = Tokenize();
+		for (int i = 0; i < sStrArray.length; ++i)
+		{
+			iValues[i] = Integer.parseInt(sStrArray[i]);
+		}
+	}
+	
+//	public <T> void GetValues(T[] xValues)
+//	{
+//		String[] sStrArray = Tokenize();
+//		DataParser.DataParse(sStrArray, xValues);
+//	}
+//	
+	public String[] Tokenize()
+	{
+		String sValue = cElement_.getFirstChild().getNodeValue();
+		String[] sStrArray;
+		
+		sStrArray = sValue.replaceAll("[\\n\\t ]", "").split(",");
+		
+		return sStrArray;
 	}
 	
 	public XMLNode GetChild(String sChildName)

@@ -1,11 +1,8 @@
 package mainpackage;
 
-//import org.w3c.dom.Node;
+import XMLParser.*;
 
 import mainpackage.Test;
-import mainpackage.ThreadTest;
-
-import XMLParser.*;
 
 public class Main {
 
@@ -16,14 +13,8 @@ public class Main {
 		// TODO Auto-generated method stub
 		System.out.println("test");
 	
-		String sPathName = Test.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		String sPathName = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		System.out.println(sPathName);
-		
-//		XMLParser cXml = new XMLParser();
-//		cXml.Load("./bin/03509.xml");
-//		
-//		Node cNode = cXml.GetNode("id");
-//		System.out.println(cNode.getNodeValue());
 		
 		XMLNode cXML = new XMLNode();
 		cXML.Load("./bin/03509.xml");
@@ -35,8 +26,11 @@ public class Main {
 			System.out.println(cCostNode.GetName());
 		
 		XMLNode cGoldNode = cCostNode.GetChild("gold");
-		int aValue = cGoldNode.GetIntValue();
-		System.out.println(aValue);
+		int[] iValues = new int[2];
+		//Integer[] iValues = new Integer[2];
+		System.out.println(iValues.length);
+		cGoldNode.GetValues(iValues);
+		System.out.println(iValues[0] + " " + iValues[1]);
 		System.out.println(cGoldNode.GetAttribute("test"));
 		
 		XMLNodeList cItemsNodeList = cCostNode.GetChild("items").GetChildList("item");
