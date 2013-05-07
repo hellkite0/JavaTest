@@ -1,6 +1,16 @@
 package XMLParser;
 
 public class DataParser {
+	static void DataParse(String sValue, Integer iValue)
+	{
+		iValue = Integer.parseInt(sValue);
+	}
+	
+	static void DataParse(String sValue, Float fValue)
+	{
+		fValue = Float.parseFloat(sValue);
+	}
+	
 	static void DataParse(String[] sStrArray, Integer[] iValues)
 	{
 		for (int i = 0; i < sStrArray.length; ++i)

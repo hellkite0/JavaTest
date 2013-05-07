@@ -1,8 +1,14 @@
 package mainpackage;
 
-import XMLParser.*;
+import java.awt.BorderLayout;
 
-import mainpackage.Test;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.text.ComponentView;
+
+import XMLParser.*;
+import network_package.*;
 
 public class Main {
 
@@ -10,14 +16,53 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("test");
+		// TODO Auto-generated method stub	
+		
+		FrameTest();
+		
+		//XMLTest();
+	}
 	
+	public static void FrameTest()
+	{
+		JFrame cFrame = new JFrame("Test Frame");
+		cFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		cFrame.setSize(800, 600);
+		cFrame.setVisible(true);
+		
+		JPanel cPanel = new JPanel();
+		cPanel.setLayout(new BorderLayout());
+		
+		JLabel cLabel = new JLabel("Test Text");
+		cPanel.add(cLabel, BorderLayout.NORTH);
+		
+		cFrame.add(cPanel);
+	}
+	
+	public static void SocketTest()
+	{
+		JSocket cSocket = new JSocket();
+		if (!cSocket.Connect("localhost", 3001))
+		{
+			System.out.println("Connection failed.");
+			return;
+		}
+		cSocket.Write("test message");
+		cSocket.Send();
+		
+		cSocket.Close();
+	}
+	
+	public static void XMLTest()
+	{
+		System.out.println("test");
+		
 		String sPathName = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		System.out.println(sPathName);
 		
 		XMLNode cXML = new XMLNode();
-		cXML.Load("./bin/03509.xml");
+		//cXML.Load("./bin/03509.xml");
+		cXML.ParseFromURI("ftp://192.168.1.86/03509.xml");
 		
 		XMLNode cCostNode = cXML.GetChild("cost");
 		if (cCostNode == null)
@@ -26,20 +71,20 @@ public class Main {
 			System.out.println(cCostNode.GetName());
 		
 		XMLNode cGoldNode = cCostNode.GetChild("gold");
-		int[] iValues = new int[2];
-		//Integer[] iValues = new Integer[2];
-		System.out.println(iValues.length);
-		cGoldNode.GetValues(iValues);
-		System.out.println(iValues[0] + " " + iValues[1]);
-		System.out.println(cGoldNode.GetAttribute("test"));
+	
+		Integer iValue = cGoldNode.GetValue().toInteger();
+		System.out.println(iValue);
+		
+		String[] sStrings = cGoldNode.GetAttribute("test").toStringList();
+		System.out.println(sStrings.length + sStrings[0] + sStrings[1] + sStrings[2]);
 		
 		XMLNodeList cItemsNodeList = cCostNode.GetChild("items").GetChildList("item");
 		
 		for (int i = 0; i < cItemsNodeList.GetSize(); ++i)
 		{
-			XMLNode cNode = cItemsNodeList.Get(i);
-			
-			System.out.println(cNode.GetAttribute("minor"));
+			XMLNode cNode = cItemsNodeList.Get(i);			
+			Integer iValue2 = cNode.GetAttribute("minor").toInteger();
+			System.out.println(iValue2);
 		}
 	}
 }
