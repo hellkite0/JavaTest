@@ -1,11 +1,11 @@
 package mainpackage;
 
 import java.awt.BorderLayout;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.text.ComponentView;
 
 import XMLParser.*;
 import network_package.*;
@@ -17,10 +17,23 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub	
+		SetShutdownHooker();
 		
-		FrameTest();
-		
+		//FrameTest();
+		SocketTest();
 		//XMLTest();
+	}
+	
+	public static void SetShutdownHooker()
+	{
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
+		{
+			public void run()
+			{
+				System.out.println("System shutdown");
+				System.gc();
+			}
+		}));
 	}
 	
 	public static void FrameTest()
@@ -45,10 +58,22 @@ public class Main {
 		if (!cSocket.Connect("localhost", 3001))
 		{
 			System.out.println("Connection failed.");
-			return;
+			System.exit(1);
 		}
-		cSocket.Write("test message");
-		cSocket.Send();
+		
+		String sInput;
+		Scanner cScanner = new Scanner(System.in);
+		do
+		{
+			sInput = cScanner.nextLine();
+			cSocket.Write(sInput);
+			cSocket.Send();
+		} while(sInput.compareTo("exit") != 0);
+		
+		//cSocket.Write("test message");
+		//cSocket.Write(10);
+		//cSocket.Write('c');
+		//cSocket.Send();
 		
 		cSocket.Close();
 	}
