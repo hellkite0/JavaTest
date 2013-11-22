@@ -66,10 +66,13 @@ public class JSocket {
 	
 	public void finalize()
 	{
-		if (cSock_.isClosed() == false)
-			Close();
-		else
-			System.out.println("Socket is already closed.");
+		if (cSock_ != null)
+		{
+			if (cSock_.isClosed() == false)
+				Close();
+			else
+				System.out.println("Socket is already closed.");
+		}
 	}
 	
 	public void Close()
